@@ -1952,13 +1952,13 @@ var _ = Describe("high_performance_hooks", func() {
 				Expect(shouldIRQLoadBalancingBeDisabled(ctx, annotations, "container2")).To(BeFalse())
 			})
 
-			It("should let container-specific housekeeping override pod-level disable", func() {
+			It("should let container-specific housekeeping override pod-level enable", func() {
 				annotations := map[string]string{
-					crioannotations.IRQLoadBalancing:                 "disable",
+					crioannotations.IRQLoadBalancing:                 "enable",
 					crioannotations.IRQLoadBalancing + "/container1": "housekeeping",
 				}
 				Expect(shouldIRQLoadBalancingBeDisabled(ctx, annotations, "container1")).To(BeTrue())
-				Expect(shouldIRQLoadBalancingBeDisabled(ctx, annotations, "container2")).To(BeTrue())
+				Expect(shouldIRQLoadBalancingBeDisabled(ctx, annotations, "container2")).To(BeFalse())
 			})
 		})
 	})
